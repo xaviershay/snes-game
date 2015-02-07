@@ -67,7 +67,7 @@ VBlank:
   inc A
 
   ; If color is greater than 6 (3 colors) reset to 0
-  cmp #06
+  cmp #(const_num_colors*2)
   bcc +
   and #0
 
@@ -80,16 +80,14 @@ VBlank:
 paint_background:
   stz reg_cgadd       ; Edit color 0, which is the screen color
   ldx current_color
-  lda Colors.l+1,x
-  sta reg_cgdata
   lda Colors.l,x
+  sta reg_cgdata
+  lda Colors.l+1,x
   sta reg_cgdata
   rtl
 
 Colors:
 
-.DB %00000011, %11100000 ; Green
-.DB %00000000, %00011111 ; Red
-.DB %01111100, %00000000 ; Blue
+.INCLUDE "gen/colors.asm"
 
 .ENDS
