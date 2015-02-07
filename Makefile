@@ -3,7 +3,7 @@ all: main.smc
 main.smc: main.obj temp
 	wlalink -vr temp main.smc
 
-main.obj: gen/colors.asm
+main.obj: main.asm gen/colors.asm
 	wla-65816 -o main.asm main.obj
 
 gen/colors.asm: pre/colors.rb
